@@ -1,0 +1,654 @@
+swagger: '2.0'
+info:
+  description: 'Conekta API'
+  version: 1.0.0
+  title: Conekta API
+  contact:
+    email: support@conekta.io
+host: api.conekta.io
+
+schemes:
+  - https
+securityDefinitions:
+  conekta_api_key:
+    type: basic
+    
+paths:
+  /customers/plans/{plan_id}:
+    delete:
+      security:
+       - conekta_api_key: []
+      parameters:
+       - in: path
+         name: plan_id
+         type: string
+         required: true      
+      responses:
+       '200':
+         description: successful operation
+         schema:
+           $ref: '#/definitions/plan'         
+  /customers/plans:
+    put:
+       security:
+        - conekta_api_key: []
+       parameters:
+        - in: body
+          name: subscription
+          required: true        
+          schema:
+            $ref: '#/definitions/plan'  
+       description: captures an payment
+       responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/plan'  
+    post:
+       security:
+        - conekta_api_key: []
+       parameters:
+        - in: body
+          name: subscription
+          required: true        
+          schema:
+            $ref: '#/definitions/plan'  
+       description: captures an payment
+       responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/plan'  
+  /customers/{customer_id}/subscription/cancel:
+    post:
+       security:
+        - conekta_api_key: []
+       parameters:
+        - in: path
+          name: customer_id
+          type: string
+          required: true        
+       description: captures an payment
+       responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/subscription'  
+  /customers/{customer_id}/subscription/resume:
+    post:
+       security:
+        - conekta_api_key: []
+       parameters:
+        - in: path
+          name: customer_id
+          type: string
+          required: true        
+       description: captures an payment
+       responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/subscription'   
+  /customers/{customer_id}/subscription/pause:
+    post:
+       security:
+        - conekta_api_key: []
+       parameters:
+        - in: path
+          name: customer_id
+          type: string
+          required: true        
+       description: captures an payment
+       responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/subscription'   
+  /customers/{customer_id}/subscription:
+    post:
+       security:
+        - conekta_api_key: []
+       parameters:
+        - in: path
+          name: customer_id
+          type: string
+          required: true        
+        - in: body
+          name: subscription
+          required: true
+          schema:
+            $ref: '#/definitions/subscription_reference'  
+          
+       description: captures an payment
+       responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/subscription'   
+  /customers/{customer_id}/cards:
+    delete:
+       security:
+        - conekta_api_key: []
+       parameters:
+        - in: path
+          name: customer_id
+          type: string
+          required: true        
+        - in: body
+          name: client
+          required: true
+          schema:
+            $ref: '#/definitions/token_object'  
+          
+       description: captures an payment
+       responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/card'     
+    put:
+       security:
+        - conekta_api_key: []
+       parameters:
+        - in: path
+          name: customer_id
+          type: string
+          required: true        
+        - in: body
+          name: client
+          required: true
+          schema:
+            $ref: '#/definitions/token_object'  
+          
+       description: captures an payment
+       responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/card'     
+    post:
+       security:
+        - conekta_api_key: []
+       parameters:
+        - in: path
+          name: customer_id
+          type: string
+          required: true        
+        - in: body
+          name: client
+          required: true
+          schema:
+            $ref: '#/definitions/token_object'  
+          
+       description: captures an payment
+       responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/card'    
+  /customers/{customer_id}:
+    delete:
+       security:
+        - conekta_api_key: []
+       parameters:
+        - in: path
+          name: customer_id
+          type: string
+          required: true        
+       description: captures an payment
+       responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/customer_client'    
+    put:
+       security:
+        - conekta_api_key: []
+       parameters:
+        - in: path
+          name: customer_id
+          type: string
+          required: true        
+       description: captures an payment
+       responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/customer_client'
+  /customers:
+    post:
+       security:
+        - conekta_api_key: []
+       parameters:
+        - in: body
+          name: client
+          required: true
+          schema:
+            $ref: '#/definitions/base_client'   
+       description: captures an payment
+       responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/customer_client'    
+  /charges/{charge_id}/capture:
+    post:
+       security:
+        - conekta_api_key: []
+       parameters:
+        - in: path
+          name: charge_id
+          type: string
+          required: true        
+       description: captures an payment
+       responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/charge'    
+  /charges/{charge_id}/refund:
+    post:
+       security:
+        - conekta_api_key: []
+       parameters:
+        - in: path
+          name: charge_id
+          type: string
+          required: true        
+       responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/charge'      
+        
+  /charges/{charge_id}:
+    get:
+      security:
+        - conekta_api_key: []
+      parameters:
+        - in: path
+          name: charge_id
+          type: string
+          required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/charge'
+  /charges:   
+    get:
+      security:
+        - conekta_api_key: []    
+      responses:
+        '200':
+          description: successful operation
+          
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/charge'        
+    post:
+      security:
+        - conekta_api_key: []
+      summary: Create a Charge 
+      description: ''
+      consumes:
+        - application/json
+        - application/vnd.conekta-v1.0.0+json
+      produces:
+        - application/vnd.conekta-v1.0.0+json
+      parameters:
+        - in: body
+          name: body
+          description: Charge object 
+          required: true
+          schema:
+            $ref: '#/definitions/charge'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/charge'
+        '500':
+          description: General Error
+          schema:
+            $ref: '#/definitions/error'
+        '401':
+          description: Unautorized
+          schema:
+            $ref: '#/definitions/error'
+        '402':  
+          description: Unprocessable Entity
+        '422':
+          description: Invalid input
+          schema:
+            $ref: '#/definitions/error'
+      produces:
+        - application/json
+  
+definitions:
+  plan:
+    type: object
+    properties:
+      id:
+        type: string
+      object:
+        type: string
+      livemode:
+        type: boolean
+      created_at:
+        type: string
+      name:
+        type: string
+      amount:
+        type: string
+      currency:
+        type: string
+      interval:
+        type: integer
+      frequency:
+        type: integer
+      interval_total_count:
+        type: integer
+      trial_period_days:
+        type: integer
+  
+  subscription_reference:
+    type: object
+    properties:
+      plan:
+        type: string
+      card:
+        type: string  
+  token_object:
+    type: object
+    properties:
+      token:
+        type: string
+      id:
+        type: string  
+      active:
+        type: boolean
+  card:
+    type: object
+    properties:
+      id:
+        type: string
+      object:
+        type: string
+      created_at:
+        type: string
+      name:
+        type: string
+      last4:
+        type: string
+      exp_month:
+        type: string
+      exp_year:
+        type: string
+      active:
+        type: string
+      address:
+        $ref: '#/definitions/billing_address'
+  
+  base_client:
+    type: object
+    properties:
+      plan:
+        type: string
+      name:
+        type: string
+      email:
+        type: string
+      phone:
+        type: string
+      cards:
+        type: array
+        items:
+          type: string
+  customer_client:
+    type: object
+    properties:
+      id:
+        type: string
+      object:
+        type: string
+      livemode:
+        type: string
+      created_at:
+        type: string
+      name:
+        type: string
+      email:
+        type: string
+      phone:
+        type: string
+      default_card:
+        type: string
+      billing_address:
+        $ref: '#/definitions/billing_address'
+      shipping_address:
+        $ref: '#/definitions/billing_address'
+      cards:
+        type: array
+        items:
+          $ref: '#/definitions/tokenized_card'
+      subscriptions:
+        type: array
+        items:
+          $ref: '#/definitions/subscription'          
+  
+  subscription:
+    type: object
+    properties:
+      id:
+        type: string
+      card:
+        type: string
+      plan_id:
+        type: string
+      status:
+        type: string
+      start:
+        type: string
+      billing_cycle_start:
+        type: string
+      billing_cycle_end:
+        type: string    
+  tokenized_card:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      last4:
+        type: string
+      exp_month:
+        type: string
+      exp_year:
+        type: string
+      active:
+        type: string        
+  cash:
+    type: object
+    properties:
+      type:
+        type: string
+      expires_at:
+        type: string
+  error:
+    type: object
+    properties:
+      object:
+        type: string
+      type:
+        type: string
+      message:
+        type: string
+      message_to_purchaser:
+        type: string
+      code:
+        type: string
+      param:
+        type: string
+
+  billing_address:
+    type: object
+    properties:
+      street1:
+        type: string
+      street2:
+        type: string        
+      street3:
+        type: string
+      city: 
+        type: string
+      state:
+        type: string
+      zip:
+        type: string
+      country:
+        type: string
+      tax_id:
+        type: string
+      company_name:
+        type: string
+      phone:
+        type: string
+      email:
+        type: string
+  line_item:
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      unit_price:
+        type: integer
+      quantity:
+        type: integer
+      sku:
+        type: string
+      category:
+        type: string
+  customer:
+    type: object
+    properties:
+      logged_in: 
+        type: string
+      successful_purchases:
+        type: integer
+      created_at:
+        type: integer
+      updated_at:  
+        type: integer
+      offline_payments:
+        type: integer
+      score:
+        type: integer
+  details:
+    type: object
+    properties:
+      name:
+        type: string
+      phone:
+        type: string
+      email:
+        type: string
+      customer:
+          $ref: '#/definitions/customer'
+      line_items:
+        type: array
+        items:
+          $ref: '#/definitions/line_item'
+      billing_address:
+          $ref: '#/definitions/billing_address'
+        
+  payment_method:
+    type: object
+    properties:
+      object: 
+        type: string
+      name:
+        type: string
+      exp_month:
+        type: integer
+      exp_year:
+        type: integer
+      auth_code:
+        type: string
+      last4: 
+        type: string
+      brand:
+        type: string
+      type:
+        type: string
+      barcode_url:
+        type: string
+      barcode:
+        type: string
+      address:
+        $ref: '#/definitions/billing_address'
+  refunds:
+    type: object
+    properties:
+      created_at:
+        type: string
+      amount:
+        type: integer
+      currency:
+        type: string
+      transaction:
+        type: string
+  charge:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Charge object id
+      monthly_installments:
+        type: string
+        example: |
+          this options canbe 3 6 9 
+      refunds:
+        type: array
+        items:
+          $ref: '#/definitions/refunds'
+      livemode:
+        type: boolean
+        description: Live mode 
+      cash:
+        $ref: '#/definitions/cash'
+      description:
+        type: string
+        description: Charge Description
+      amount:
+        type: integer
+        format: int32
+        description: ammount without decimal places
+      currency:
+        type: string
+        description: Currency
+      reference_id:
+        type: string
+      bank:
+        type: object
+        properties:
+          type:
+            type: string
+      card: 
+        type: string
+        description: token card
+      failure_code:
+        type: string
+      failure_message:
+        type: string
+      payment_method:
+        $ref: '#/definitions/payment_method'
+      details:
+          $ref: '#/definitions/details'
+      
+
+            
